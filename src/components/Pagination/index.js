@@ -14,15 +14,17 @@ const NextButton = styled(Button)`
   padding: 15px 25px;
 `;
 
-const Pagination = ({previousUrl, nextUrl, isFirst = false, isLast = false}) => (
-  <Wrapper>
-    {!isFirst &&
-      <PreviousButton to={previousUrl}>&larr; Newer Posts</PreviousButton>
-    }
-    {!isLast &&
-      <NextButton to={nextUrl}>Older Posts &rarr;</NextButton>
-    }
-  </Wrapper>
-);
+function Pagination({previousUrl, nextUrl, isFirst = false, isLast = false}) {
+  return (
+    <Wrapper>
+      {!isFirst &&
+        <PreviousButton to={previousUrl}>&larr; Newer Posts</PreviousButton>
+      }
+      {!isLast &&
+        <NextButton to={nextUrl}>Older Posts &rarr;</NextButton>
+      }
+    </Wrapper>
+  );
+}
 
 export default Pagination;

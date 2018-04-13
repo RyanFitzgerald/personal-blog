@@ -6,6 +6,7 @@ import get from 'lodash/get';
 
 import Container from '../components/Container';
 import PostWrapper from '../components/PostWrapper';
+import Share from '../components/Share';
 
 const DateWrapper = styled.span`
   font-size: 0.85em;
@@ -31,6 +32,7 @@ class BlogPostTemplate extends React.Component {
           <TitleWrapper>{post.frontmatter.title}</TitleWrapper>        
           <div dangerouslySetInnerHTML={{ __html: post.html }} />
         </PostWrapper>
+        <Share title={post.frontmatter.date}/>
       </Container>
     )
   }

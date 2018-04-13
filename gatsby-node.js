@@ -39,7 +39,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           edges: result.data.allMarkdownRemark.edges,
           createPage: createPage,
           pageTemplate: "src/templates/index.js",
-          pageLength: 2, // This is optional and defaults to 10 if not used
+          pageLength: 5,
         });
 
         // Create blog posts pages.

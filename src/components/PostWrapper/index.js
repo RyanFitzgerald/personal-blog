@@ -15,15 +15,14 @@ const PostWrapper = styled.article`
   }
 
   a {
-    border-bottom: 2px solid ${mainColour};
+    border-bottom: 2px solid #87cdff;
     color: ${textColour};
     padding: 0 2px;
     text-decoration: none;
     transition: 0.25s ease background;
 
     &:hover {
-      background: ${mainColour};
-      color: #fff;
+      background: #87cdff;
     }
   }
 
