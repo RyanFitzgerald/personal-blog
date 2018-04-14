@@ -13,6 +13,7 @@ const IndexPage = ({ data, pathContext }) => {
 
   return (
     <section>
+      <Helmet title="Dev Blog | Ryan Fitzgerald" />
       <SubHeader/>
       {group.map(({ node }) => (
         <Summary 

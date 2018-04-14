@@ -32,7 +32,7 @@ class BlogPostTemplate extends React.Component {
           <TitleWrapper>{post.frontmatter.title}</TitleWrapper>        
           <div dangerouslySetInnerHTML={{ __html: post.html }} />
         </PostWrapper>
-        <Share title={post.frontmatter.date}/>
+        <Share title={post.frontmatter.title}/>
       </Container>
     )
   }

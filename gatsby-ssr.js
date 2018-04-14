@@ -11,4 +11,4 @@ exports.replaceRenderer = ({
   const bodyHTML = renderToString(bodyComponent);
   replaceBodyHTMLString(bodyHTML);
   setHeadComponents([sheet.getStyleElement()]);
-}
+};
