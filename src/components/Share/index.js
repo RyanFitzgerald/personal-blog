@@ -5,8 +5,8 @@ import H2 from './H2';
 import List from './List';
 import Item from './Item';
 
-function Share({ title }) {
-  const url = encodeURI(window.location.href);
+function Share({ title, path }) {
+  const url = encodeURI(`https://blog.ryanfitzgerald.ca${path}`);
   const text = encodeURI(title);
   return (
     <Wrapper>

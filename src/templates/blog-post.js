@@ -32,7 +32,7 @@ class BlogPostTemplate extends React.Component {
           <TitleWrapper>{post.frontmatter.title}</TitleWrapper>        
           <div dangerouslySetInnerHTML={{ __html: post.html }} />
         </PostWrapper>
-        <Share title={post.frontmatter.title}/>
+        <Share title={post.frontmatter.title} path={post.frontmatter.path}/>
       </Container>
     )
   }
@@ -52,6 +52,7 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
+        path
         date(formatString: "MMMM D, YYYY")
       }
     }
