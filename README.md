@@ -1,4 +1,11 @@
-# Ryan Fitzgerald Dev Blog
+# gatsby-starter-blog
+Gatsby starter for creating a blog
 
-Currently a work in progress. Built using React and GatsbyJS.
+Install this starter (assuming Gatsby is installed) by running from your CLI:
 
+`gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog`
+
+Or [view the live demo here](https://gatsby-starter-blog-demo.netlify.com/).
+
+## Running in development
+`gatsby develop`
