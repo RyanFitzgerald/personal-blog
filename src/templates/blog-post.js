@@ -1,9 +1,13 @@
-import React from 'react';
-import Helmet from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 import get from 'lodash/get';
+import Helmet from 'react-helmet';
+import React from 'react';
 
-import Layout from '../components/Layout';
+import Layout from 'components/Layout';
+import Post from 'components/Post';
+import PostHeader from 'components/PostHeader';
+import PostNavigation from 'components/PostNavigation';
+import Share from 'components/Share';
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -12,48 +16,40 @@ class BlogPostTemplate extends React.Component {
     const siteDescription = post.excerpt;
     const { previous, next } = this.props.pageContext;
 
+    const navProps = {};
+    if (next) {
+      navProps.next = {
+        path: next.fields.slug,
+        title: next.frontmatter.title,
+      };
+    }
+
+    if (previous) {
+      navProps.previous = {
+        path: previous.fields.slug,
+        title: previous.frontmatter.title,
+      };
+    }
+
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <Helmet
           htmlAttributes={{ lang: 'en' }}
           meta={[{ name: 'description', content: siteDescription }]}
-          title={`${post.frontmatter.title} | ${siteTitle}`}
+          title={`${post.frontmatter.title} | Ryan Fitzgerald`}
         />
-        <h1>{post.frontmatter.title}</h1>
-        <p
-          style={{
-            display: 'block',
-          }}
-        >
-          {post.frontmatter.date}
-        </p>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        <hr />
-
-        <ul
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            listStyle: 'none',
-            padding: 0,
-          }}
-        >
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
+        <Post>
+          <PostHeader
+            title={post.frontmatter.title}
+            date={post.frontmatter.date}
+          />
+          <div dangerouslySetInnerHTML={{ __html: post.html }} />
+          <Share
+            title={post.frontmatter.title}
+            path={this.props.location.pathname}
+          />
+        </Post>
+        <PostNavigation {...navProps} />
       </Layout>
     );
   }

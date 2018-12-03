@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Starter Blog',
-    author: 'Kyle Mathews',
-    description: 'A starter blog demonstrating what Gatsby can do.',
-    siteUrl: 'https://gatsbyjs.github.io/gatsby-starter-blog/',
+    title: 'Dev Blog | Ryan Fitzgerald',
+    author: 'Ryan Fitzgerald',
+    description: 'A blog for all things relating to development',
+    siteUrl: 'https://blog.ryanfitzgerald.ca',
   },
   pathPrefix: '/gatsby-starter-blog',
   plugins: [
@@ -17,11 +17,14 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
+        excerpt_separator: `<!-- end -->`,
         plugins: [
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 590,
+              maxWidth: 700,
+              linkImagesToOriginal: false,
+              wrapperStyle: 'margin: 0 -30px !important;',
             },
           },
           {
@@ -45,19 +48,9 @@ module.exports = {
       },
     },
     `gatsby-plugin-feed`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/assets/gatsby-icon.png`,
-      },
-    },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-styled-components`,
+    `gatsby-plugin-react-svg`,
   ],
-}
+};
