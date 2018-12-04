@@ -8,7 +8,15 @@ export const replaceRenderer = ({
   setHeadComponents,
 }) => {
   const sheet = new ServerStyleSheet();
-  const bodyHTML = renderToString(bodyComponent);
+
+  const app = (
+    <StyleSheetManager sheet={sheet.instance}>
+      {React.cloneElement(bodyComponent)}
+    </StyleSheetManager>
+  );
+
+  const bodyHTML = renderToString(app);
+
   replaceBodyHTMLString(bodyHTML);
   setHeadComponents([sheet.getStyleElement()]);
 };
