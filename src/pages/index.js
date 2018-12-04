@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 
 import Layout from 'components/Layout';
 import SubHeader from 'components/SubHeader';
-import Summary from 'components/summary';
+import Summary from 'components/Summary';
 
 class BlogIndex extends React.Component {
   render() {
