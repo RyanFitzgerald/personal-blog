@@ -21,7 +21,7 @@ export const Link = styled.a`
   border: 1px solid #e2e2e2 !important;
   display: inline-block;
   line-height: 15px;
-  margin: 0 5px;
+  margin: 5px;
   padding: 5px 25px !important;
 
   &:hover {
