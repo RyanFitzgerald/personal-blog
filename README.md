@@ -1,4 +1,3 @@
-# Ryan Fitzgerald Dev Blog
+# Ryan Fitzgerald - Development Blog
 
-Currently a work in progress. Built using React and GatsbyJS.
-
+Built using React and GatsbyJS

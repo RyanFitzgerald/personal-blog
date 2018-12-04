@@ -1,59 +1,77 @@
-import React from 'react';
-import styled from 'styled-components';
-import Helmet from 'react-helmet';
-import Link from 'gatsby-link';
+import { Link, graphql } from 'gatsby';
 import get from 'lodash/get';
+import Helmet from 'react-helmet';
+import React from 'react';
 
-import Container from '../components/Container';
-import PostWrapper from '../components/PostWrapper';
-import Share from '../components/Share';
-
-const DateWrapper = styled.span`
-  font-size: 0.85em;
-  padding-left: 30px;
-`;
-
-const TitleWrapper = styled.h1`
-  margin-top: 0;
-`;
+import Layout from 'components/Layout';
+import Post from 'components/Post';
+import PostHeader from 'components/PostHeader';
+import PostNavigation from 'components/PostNavigation';
+import Share from 'components/Share';
 
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark;
     const siteTitle = get(this.props, 'data.site.siteMetadata.title');
+    const siteDescription = post.excerpt;
+    const { previous, next } = this.props.pageContext;
+
+    const navProps = {};
+    if (next) {
+      navProps.next = {
+        path: next.fields.slug,
+        title: next.frontmatter.title,
+      };
+    }
+
+    if (previous) {
+      navProps.previous = {
+        path: previous.fields.slug,
+        title: previous.frontmatter.title,
+      };
+    }
 
     return (
-      <Container>
-        <Helmet title={`${post.frontmatter.title} | Ryan Fitzgerald`} />
-        <PostWrapper>
-          <DateWrapper>
-            {post.frontmatter.date}
-          </DateWrapper>
-          <TitleWrapper>{post.frontmatter.title}</TitleWrapper>        
+      <Layout location={this.props.location} title={siteTitle}>
+        <Helmet
+          htmlAttributes={{ lang: 'en' }}
+          meta={[{ name: 'description', content: siteDescription }]}
+          title={`${post.frontmatter.title} | Ryan Fitzgerald`}
+        />
+        <Post>
+          <PostHeader
+            title={post.frontmatter.title}
+            date={post.frontmatter.date}
+          />
           <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        </PostWrapper>
-        <Share title={post.frontmatter.title} path={post.frontmatter.path}/>
-      </Container>
-    )
+          <Share
+            title={post.frontmatter.title}
+            path={this.props.location.pathname}
+          />
+        </Post>
+        <PostNavigation {...navProps} />
+      </Layout>
+    );
   }
 }
 
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostByPath($path: String!) {
+  query BlogPostBySlug($slug: String!) {
     site {
       siteMetadata {
         title
+        author
       }
     }
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
       id
+      excerpt
       html
       frontmatter {
         title
-        path
-        date(formatString: "MMMM D, YYYY")
+        date(formatString: "MMMM DD, YYYY")
       }
     }
   }

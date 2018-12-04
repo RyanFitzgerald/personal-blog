@@ -1,58 +1,80 @@
-const _ = require("lodash");
-const Promise = require("bluebird");
-const path = require("path");
-const select = require(`unist-util-select`);
-const fs = require(`fs-extra`);
-const createPaginatedPages = require("gatsby-paginate");
+const _ = require('lodash');
+const Promise = require('bluebird');
+const path = require('path');
+const { createFilePath } = require('gatsby-source-filesystem');
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    },
+  });
+};
+
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions;
 
   return new Promise((resolve, reject) => {
-    const pages = [];
-    const blogPost = path.resolve("./src/templates/blog-post.js");
+    const blogPost = path.resolve('./src/templates/blog-post.js');
     resolve(
       graphql(
         `
-      {
-        allMarkdownRemark(limit: 1000) {
-          edges {
-            node {
-              excerpt
-              frontmatter {
-                title
-                path
-                date(formatString: "MMMM D, YYYY")
+          {
+            allMarkdownRemark(
+              sort: { fields: [frontmatter___date], order: DESC }
+              limit: 1000
+            ) {
+              edges {
+                node {
+                  fields {
+                    slug
+                  }
+                  frontmatter {
+                    title
+                  }
+                }
               }
             }
           }
-        }
-      }
-    `
+        `,
       ).then(result => {
         if (result.errors) {
           console.log(result.errors);
           reject(result.errors);
         }
 
-        createPaginatedPages({
-          edges: result.data.allMarkdownRemark.edges,
-          createPage: createPage,
-          pageTemplate: "src/templates/index.js",
-          pageLength: 5,
-        });
-
         // Create blog posts pages.
-        _.each(result.data.allMarkdownRemark.edges, edge => {
+        const posts = result.data.allMarkdownRemark.edges;
+
+        _.each(posts, (post, index) => {
+          const previous =
+            index === posts.length - 1 ? null : posts[index + 1].node;
+          const next = index === 0 ? null : posts[index - 1].node;
+
           createPage({
-            path: edge.node.frontmatter.path,
+            path: post.node.fields.slug,
             component: blogPost,
             context: {
-              path: edge.node.frontmatter.path,
+              slug: post.node.fields.slug,
+              previous,
+              next,
             },
           });
         });
-      })
+      }),
     );
   });
-}
+};
+
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions;
+
+  if (node.internal.type === `MarkdownRemark`) {
+    const value = createFilePath({ node, getNode });
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    });
+  }
+};
