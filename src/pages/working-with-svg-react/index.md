@@ -9,7 +9,7 @@ If you've worked on a web application, chances are you've used an SVG at some po
 
 ## SVG as image
 
-One of the first ways you can use SVGs in React is similar to how you'd use them in regular markup. You can create an image tag with a source attribute and then simply pass the SVG as the image source. 
+One of the first ways you can use SVGs in React is similar to how you'd use them in regular markup. You can create an image tag with a source attribute and then simply pass the SVG as the image source.
 
 ```js
 import React from 'react';
@@ -38,8 +38,8 @@ import React from 'react';
 
 const MyIcon = () => (
   <svg height="100" width="100">
-    <circle cx="50" cy="50" r="40" stroke="black" strokeWidth="3" fill="red" /> 
-  </svg> 
+    <circle cx="50" cy="50" r="40" stroke="black" strokeWidth="3" fill="red" />
+  </svg>
 );
 
 export const MyIcon;
@@ -47,7 +47,7 @@ export const MyIcon;
 
 One thing to note with this approach is that just like with other tags, you'll need to convert certain attributes to work with JSX. For example, in the above code snippet `stroke-width` had to be changed to `strokeWidth`.
 
-The benefit of this approach is you can alter the CSS properties of the SVG directly and keep it inline with how you're currently managing styles in your app, such as with `styled-components` or any other method. Another benefit is that you get the full interactibility of the SVG, such as click events, inserting text, and more. Finally, you end up with fewer HTTP requests than you would with the image approach above. 
+The benefit of this approach is you can alter the CSS properties of the SVG directly and keep it inline with how you're currently managing styles in your app, such as with `styled-components` or any other method. Another benefit is that you get the full interactibility of the SVG, such as click events, inserting text, and more. Finally, you end up with fewer HTTP requests than you would with the image approach above.
 
 On the other hand, this approach isn't without downsides. One downside is that every SVG needs to be converted to a React component and depending on the number of icons, this may take some time, especially if you need to also change a bunch of attributes to be JSX compatible. Also, this method doesn't allow for SVGs to be cached in the same way as the image source approach.
 
@@ -62,7 +62,7 @@ import * as MyIcon from './MyIcon.svg';
 
 const MyComponent = () => (
   <div>
-    <img src={MyIcon}/>
+    <MyIcon/>
   </div>
 );
 
